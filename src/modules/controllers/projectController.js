@@ -3,11 +3,7 @@ import taskService from "../services/taskService";
 import storageService from "../services/storageService";
 
 export default {
-    projects : [],
-
-    init() {
-        this.projects = storageService.loadProjects();
-    },
+    projects : storageService.loadProjects(),
 
     save() {
         storageService.saveProjects(this.projects);
