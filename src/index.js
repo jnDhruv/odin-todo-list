@@ -1,5 +1,5 @@
 import projectController from "./modules/controllers/projectController";
 
-projectController.init();
+import './styles/layout.css';
 
 console.log(projectController.projects);
