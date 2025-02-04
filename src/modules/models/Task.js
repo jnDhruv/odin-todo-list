@@ -7,8 +7,6 @@ class Task {
         this.dueDate = dueDate;
         this.completed = false;
     }
-
-    toggleCompletd() {
-        this.completed = !this.completed;
-    }
 }
+
+export default Task;
