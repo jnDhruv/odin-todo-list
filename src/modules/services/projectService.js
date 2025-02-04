@@ -5,12 +5,20 @@ export default {
         return new Project(title);
     },
 
+    updateTask(project, property) {
+        Object.assign(project, property);
+    },
+
     addTaskToProject(project, task) {
         project.tasksArr.push(task);
     },
 
     removeTaskFromProject(project, taskID) {
         project.tasksArr = project.tasksArr.filter((task) => task.id !== taskID);
+    },
+
+    getAllTasks(project) {
+        return project.tasksArr;
     },
 
     sortTasksByID(project) {

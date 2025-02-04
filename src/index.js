@@ -1,4 +1,5 @@
-import Task from "./modules/task.js";
+import projectController from "./modules/controllers/projectController";
 
-const task1 = Task("Hello", "Wave a hi", "high", "2025-02-04");
-console.log(task1.report());
+projectController.init();
+
+console.log(projectController.projects);
