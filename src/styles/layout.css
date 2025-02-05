@@ -1,6 +1,7 @@
 :root {
     --primary-color: #008080;
     --primary-color-darker: #006666;
+    --primary-color-lighter: #99CCCC;
     --background-color: #F4F7F8;
     --primary-text-color: #2D2D2D;
     --border-color: black;
@@ -99,6 +100,7 @@ main {
     position: relative;
     border-right: 2px solid var(--border-color);
     background-color: var(--primary-color-darker);
+    height: calc(100vh - 87.2px);
     width: 250px;
     color: white;
     

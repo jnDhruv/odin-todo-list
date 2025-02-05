@@ -20,7 +20,7 @@ export default {
 
     initializeDefaultData() {
         const defaultProject = projectService.createProject("Default Tasks");
-        const defaultTask = taskService.createTask("Brush your teeth", "", 1, (new Date()).setHours(0, 0, 0, 0));
+        const defaultTask = taskService.createTask("Brush your teeth", "", 1, new Date().getTime());
 
         projectService.addTaskToProject(defaultProject, defaultTask);
         return [defaultProject];

@@ -1,0 +1,44 @@
+#create-new-task,
+#create-new-project {
+    border: none;
+    border-radius: 10px;
+
+    & form {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        & input {
+            display: block;
+            border-radius: 2px;
+            border: 1px solid;
+            font-size: 100%;
+            font-family: inherit;
+            padding: 5px;
+        }
+
+        & div:has(button) {
+            text-align: center;
+            & button {
+                margin-top: 10px;
+                background-color: var(--primary-color);
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+                align-items: center;
+                transition: 0.3s;
+
+                &:hover {
+                    background-color: var(--primary-color-lighter);
+                }
+            }
+
+            & img {
+                width: 25px;
+            }
+        }
+    }
+}
+
+dialog::backdrop {
+    backdrop-filter: blur(5px); 
+}

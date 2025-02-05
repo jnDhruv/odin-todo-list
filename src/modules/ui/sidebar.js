@@ -1,4 +1,6 @@
 import projectController from "../controllers/projectController";
+import loadProjectPage from "./loadProjectPage";
+
 import "../../styles/sidebar.css";
 import deleteIcon from "../../icons/delete.svg";
 
@@ -8,6 +10,10 @@ export default {
 
         const projectButton = document.createElement('button');
         projectButton.textContent = project.title;
+        projectButton.dataset.projectID = project.id;
+        projectButton.addEventListener('click', () => {
+            loadProjectPage.render(project);
+        });
 
         const deleteButton = document.createElement('button');
         deleteButton.classList.add("project-delete");
@@ -45,14 +51,24 @@ export default {
 
         const addNewProjectLi = document.createElement('li');
 
-        addNewProjectLi.classList.add('project-button');
-        addNewProjectLi.classList.add('new-project-button');
+        addNewProjectLi.classList.add('project-button', 'new-project-button');
         
         const addNewProjectBtn = document.createElement('button');
         addNewProjectBtn.textContent = `+ Create new project`;
         addNewProjectBtn.addEventListener('click', () => {
-            let name = prompt("Project name?");
-            projectController.addProject(name);
+            const newProjDiag = document.querySelector('#create-new-project');
+            const newProjForm = newProjDiag.querySelector('form');
+
+            const newProjTitle = newProjForm.querySelector('#project-title');
+
+            newProjDiag.showModal();
+
+            newProjForm.addEventListener('submit', () => {
+                projectController.addProject(newProjTitle.value);
+                newProjForm.reset();
+                this.render();
+            });
+
             this.render();
         });
 
