@@ -61,7 +61,7 @@
         opacity: 0.6;
         cursor: pointer;
         border-radius: 10px;
-        transition: 0.3s;
+        transition: 0.2s ease-in;
 
         &:hover {
             background-color: var(--primary-color-lighter);
