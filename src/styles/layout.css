@@ -18,6 +18,7 @@ h1 {
 }
 
 body {
+    display: grid;
     font-family: Nunito;
     background-color:var(--background-color);
 }

@@ -37,6 +37,7 @@
         <div class="project-content"></div>
     </main>
     <dialog id="create-new-task">
+        <h1>New Task</h1>
         <form action="#" method="dialog">
             <div>
                 <label for="task-title">Task Title:</label>
@@ -59,7 +60,10 @@
                     <option value="3">Low</option>
                 </select>
             </div>
-            <button type="submit"><img src="icons/tick.svg" alt="Done"></button>
+            <div>
+                <button type="submit"><img src="icons/tick.svg" alt="Done"></button>
+                <button class="close-dialog-button"><img src="./icons/close.svg" alt="Close"></button>
+            </div>
         </form>
     </dialog>
     <dialog id="create-new-project">
@@ -70,6 +74,7 @@
             </div>
             <div>
                 <button type="submit"><img src="icons/tick.svg" alt="Done"></button>
+                <button class="close-dialog-button"><img src="./icons/close.svg" alt="Close"></button>
             </div>
         </form>
     </dialog>
