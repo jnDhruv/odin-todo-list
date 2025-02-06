@@ -20,10 +20,12 @@ export default {
 
     initializeDefaultData() {
         const defaultProject = projectService.createProject("Default Tasks");
-        const defaultTask = taskService.createTask("Brush your teeth", "", 1, new Date().getTime());
+        // Due time of default task is 1 hour ahead of when it's created
+        const dueDate = new Date(new Date().getTime() + 60 * 60000);
+        
+        const defaultTask = taskService.createTask("Brush your teeth", "", 1, dueDate.getTime());
 
         projectService.addTaskToProject(defaultProject, defaultTask);
         return [defaultProject];
     }
-
 }
