@@ -13,23 +13,37 @@ function createHeading(text) {
     return heading;
 }
 
+function createPara(text) {
+    const para = document.createElement('p');
+    para.innerHTML = text;
+    return para;
+}
+
+function createDiv(content, ...classes) {
+    const newDiv = document.createElement('div');
+    newDiv.innerHTML = content;
+    if (classes.length !== 0) {
+        newDiv.classList.add(classes);
+    }
+    return newDiv;
+}
+
 export default {
 
     createTaskRow(task, project) {
-        const checkDiv = document.createElement('div');
+        const checkDiv = createDiv('');
         const checkBox = document.createElement('input');
         checkBox.type = 'checkbox';
         checkBox.id = task.id;
         checkDiv.appendChild(checkBox);
 
-        const taskTitleDiv = document.createElement('div');
-        const taskTitleP = document.createElement('p');
-        taskTitleP.textContent = task.title;
+        const taskTitleDiv = createDiv('');
+        const taskTitleP = createPara(task.title);
+
         taskTitleDiv.appendChild(taskTitleP);
 
-        const taskPriorDiv = document.createElement('div');
-        const taskPriorP = document.createElement('p');
-        taskPriorP.textContent = taskService.getPriority(task);
+        const taskPriorDiv = createDiv('');
+        const taskPriorP = createPara(taskService.getPriority(task));
 
         switch (taskService.getPriority(task)) {
             case "High":
@@ -45,7 +59,7 @@ export default {
 
         taskPriorDiv.appendChild(taskPriorP);
 
-        const taskDueInDiv = document.createElement('div');
+        const taskDueInDiv = createDiv('');
         const taskDueInP = document.createElement('p');
         if ((new Date()).getTime() > task.dueDate) {
             taskDueInP.textContent = taskService.getDueDate(task).toDateString();
@@ -82,24 +96,12 @@ export default {
 
         const heading = createHeading(Project.title);
 
-        const tasksList = document.createElement('div');
-        tasksList.classList.add("tasks-grid-container");
+        const tasksList = createDiv('', "tasks-grid-container");
 
-        const checkCol = document.createElement('div');
-        checkCol.textContent = "Status";
-        checkCol.classList.add("task-list-heading");
-
-        const titleCol = document.createElement('div');
-        titleCol.textContent = "Task";
-        titleCol.classList.add("task-list-heading");
-
-        const priorCol = document.createElement('div');
-        priorCol.textContent = "Priority";
-        priorCol.classList.add("task-list-heading");
-
-        const dueInCol = document.createElement('div');
-        dueInCol.textContent = "Due In";
-        dueInCol.classList.add("task-list-heading");
+        const checkCol = createDiv('Status', 'task-list-heading');
+        const titleCol = createDiv('Task', 'task-list-heading');
+        const priorCol = createDiv('Priority', 'task-list-heading');
+        const dueInCol = createDiv('Due In', 'task-list-heading');
 
         tasksList.appendChild(checkCol);
         tasksList.appendChild(titleCol);
@@ -114,8 +116,8 @@ export default {
             tasksList.appendChild(taskDueInDiv);
         });
 
-        const createTaskBtnDiv = document.createElement('div');
-        createTaskBtnDiv.classList.add('task-list-row');
+        const createTaskBtnDiv = createDiv('', 'task-list-row');
+
         const createTaskBtn = document.createElement('button');
         createTaskBtn.textContent = '+';
         createTaskBtn.addEventListener('click', () => {
@@ -137,10 +139,9 @@ export default {
         });
         createTaskBtnDiv.appendChild(createTaskBtn);
 
-        const createTaskDiv = document.createElement('div');
-        createTaskDiv.classList.add('task-list-row');
-        const createTaskP = document.createElement('p');
-        createTaskP.textContent = 'Add task';
+        const createTaskDiv = createDiv('', 'task-list-row');
+
+        const createTaskP = createPara('Add task');
         createTaskDiv.appendChild(createTaskP);
 
         tasksList.appendChild(createTaskBtnDiv);
