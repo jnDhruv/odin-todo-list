@@ -68,3 +68,38 @@
         }
     }
 }
+
+.task-title-div {
+    padding-right: 4px;
+    display: grid;
+    grid-template-columns: 1fr 80px;
+    align-items: center;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    & p {
+        flex: 1;
+    }
+}
+
+.task-buttons-div {
+    display: flex;
+    justify-content: space-between;
+    & button {
+        opacity: 0.6;
+        display: flex;
+        background-color: transparent;
+        padding: 3px;
+        margin: 0;
+        border: none;
+        border-radius: 50%;
+
+        cursor: pointer;
+        transition: opacity 0.3s, background-color 0.3s;
+        &:hover {
+            opacity: 1;
+            background-color: var(--primary-color-lighter);
+        }
+    }
+}

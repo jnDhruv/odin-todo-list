@@ -1,11 +1,13 @@
 import projectController from "../controllers/projectController";
 import taskService from "../services/taskService";
-import { formatDistance } from 'date-fns';
+import { formatDistance, format } from 'date-fns';
 
 import "../../styles/projectContent.css";
 import "../../styles/dialogs.css"
 
+import infoIcon from "../../icons/info.svg";
 import editIcon from "../../icons/edit.svg";
+import deleteIcon from "../../icons/deleteTask.svg";
 
 function createHeading(text) {
     const heading = document.createElement('h1');
@@ -28,6 +30,19 @@ function createDiv(content, ...classes) {
     return newDiv;
 }
 
+function createImg(srcObj, alt, width, height) {
+    const imgElement = document.createElement('img');
+    imgElement.src = srcObj;
+    imgElement.alt = alt;
+    if (width) {
+        imgElement.width = width;
+    }
+    if (height) {
+        imgElement.height = height;
+    }
+    return imgElement;
+}
+
 export default {
 
     createTaskRow(task, project) {
@@ -37,10 +52,31 @@ export default {
         checkBox.id = task.id;
         checkDiv.appendChild(checkBox);
 
-        const taskTitleDiv = createDiv('');
+        const taskTitleDiv = createDiv('', 'task-title-div');
         const taskTitleP = createPara(task.title);
 
+        const taskButtonsDiv = createDiv('', 'task-buttons-div');
+
+        const taskInfoButton = document.createElement("button");
+        const infoImg = createImg(infoIcon, 'info', 20, 20);
+        taskInfoButton.appendChild(infoImg);
+        taskInfoButton.title = "Info";
+        taskButtonsDiv.appendChild(taskInfoButton);
+
+        const taskEditButton = document.createElement("button");
+        const editImg = createImg(editIcon, 'Edit', 20, 20);
+        taskEditButton.appendChild(editImg);
+        taskEditButton.title = "Edit";
+        taskButtonsDiv.appendChild(taskEditButton);
+
+        const taskDeleteButton = document.createElement("button");
+        const deleteImg = createImg(deleteIcon, 'Delete', 20, 20);
+        taskDeleteButton.appendChild(deleteImg);
+        taskDeleteButton.title = "Delete";
+        taskButtonsDiv.appendChild(taskDeleteButton);
+
         taskTitleDiv.appendChild(taskTitleP);
+        taskTitleDiv.appendChild(taskButtonsDiv);
 
         const taskPriorDiv = createDiv('');
         const taskPriorP = createPara(taskService.getPriority(task));
@@ -62,7 +98,7 @@ export default {
         const taskDueInDiv = createDiv('');
         const taskDueInP = document.createElement('p');
         if ((new Date()).getTime() > task.dueDate) {
-            taskDueInP.textContent = taskService.getDueDate(task).toDateString();
+            taskDueInP.textContent = format(taskService.getDueDate(task), 'dd MMM yyyy');
             taskDueInP.style.color = "#E63946";
         } else {
             taskDueInP.textContent = formatDistance(taskService.getDueDate(task), new Date());
