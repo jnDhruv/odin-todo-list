@@ -19,6 +19,7 @@ export default {
         if (project) {
             Object.assign(project, property);
         }
+        this.save();
     },
 
     deleteProject(projectID) {

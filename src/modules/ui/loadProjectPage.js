@@ -1,5 +1,6 @@
 import projectController from "../controllers/projectController";
 import taskService from "../services/taskService";
+import sidebar from "./sidebar";
 import { formatDistanceToNow, format } from 'date-fns';
 
 import "../../styles/projectContent.css";
@@ -201,6 +202,34 @@ export default {
         projectContent.textContent = '';
 
         const heading = createHeading(project.title);
+        const editProjectBtn = document.createElement('button');
+        const editImg = createImg(editIcon, 'Edit', 20, 20);
+        editProjectBtn.appendChild(editImg);
+        editProjectBtn.title = "Edit project name";
+        editProjectBtn.classList.add('edit-project-button');
+
+        editProjectBtn.addEventListener('click', () => {
+            const editProjectDiag = document.querySelector('#edit-project');
+            const editProjectForm = editProjectDiag.querySelector('form');
+            editProjectForm.dataset.forProjectID = projectID
+
+            const title = editProjectForm.querySelector('#edit-project-title');
+            title.value = project.title;
+
+            editProjectDiag.showModal();
+
+            editProjectForm.addEventListener('submit', (e) => {
+                if (editProjectForm.checkValidity()) {
+                    projectController.updateProject(e.target.dataset.forProjectID, {
+                        title: title.value,
+                    });
+                    this.render(e.target.dataset.forProjectID);
+                    sidebar.render();
+                }
+            });
+        });
+
+        heading.appendChild(editProjectBtn);
 
         const tasksList = createDiv('', "tasks-grid-container");
         const tasksHeadingContainer = createDiv('', 'task-list-heading-container');
