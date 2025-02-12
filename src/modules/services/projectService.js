@@ -5,7 +5,7 @@ export default {
         return new Project(title);
     },
 
-    updateTask(project, property) {
+    updateProject(project, property) {
         Object.assign(project, property);
     },
 

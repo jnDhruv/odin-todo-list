@@ -22,12 +22,22 @@ export default {
     },
 
     deleteProject(projectID) {
-        this.projects = this.projects.filter(project => project.id !== projectID);
+        this.projects = this.projects.filter(project => project.id != projectID);
         this.save();
     },
 
     findProject(projectID) {
-        return this.projects.find(project => project.id === projectID);
+        const project = this.projects.find(project => project.id == projectID);
+        if (!project) throw new Error("No such project found");
+
+        return project;
+    },
+
+    findTaskInProject(taskID, projectID) {
+        const project = this.findProject(projectID);
+        if (!project) throw new Error("No such project found");
+
+        return project.tasksArr.find(task => task.id == taskID);
     },
 
     addTaskToProject(projectID, task) {
@@ -38,11 +48,19 @@ export default {
         this.save();
     },
 
-    deleteTaskToProject(projectID, task) {
+    updateTaskInProject(projectID, taskID, properties) {
+        const taskToBeUpdated = this.findTaskInProject(taskID, projectID);
+        if (!taskToBeUpdated) throw new Error("No such task found");
+
+        taskService.updateTask(taskToBeUpdated, properties);
+        this.save();
+    },
+
+    deleteTaskFromProject(projectID, task) {
         const project = this.findProject(projectID);
         if (!project) throw new Error("No such project found");
 
-        projectService.removeTaskFromProject(project, task);
+        projectService.removeTaskFromProject(project, task.id);
         this.save();
     },
 }

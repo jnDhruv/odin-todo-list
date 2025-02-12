@@ -1,6 +1,6 @@
 import projectController from "../controllers/projectController";
 import taskService from "../services/taskService";
-import { formatDistance, format } from 'date-fns';
+import { formatDistanceToNow, format } from 'date-fns';
 
 import "../../styles/projectContent.css";
 import "../../styles/dialogs.css"
@@ -15,9 +15,12 @@ function createHeading(text) {
     return heading;
 }
 
-function createPara(text) {
+function createPara(text, ...classes) {
     const para = document.createElement('p');
     para.innerHTML = text;
+    if (classes.length !== 0) {
+        classes.forEach(classIn => para.classList.add(classIn));
+    }
     return para;
 }
 
@@ -25,7 +28,7 @@ function createDiv(content, ...classes) {
     const newDiv = document.createElement('div');
     newDiv.innerHTML = content;
     if (classes.length !== 0) {
-        newDiv.classList.add(classes);
+        classes.forEach(classIn => newDiv.classList.add(classIn));
     }
     return newDiv;
 }
@@ -46,13 +49,13 @@ function createImg(srcObj, alt, width, height) {
 export default {
 
     createTaskRow(task, project) {
-        const checkDiv = createDiv('');
+        const checkDiv = createDiv('', "task-list-row");
         const checkBox = document.createElement('input');
         checkBox.type = 'checkbox';
         checkBox.id = task.id;
         checkDiv.appendChild(checkBox);
 
-        const taskTitleDiv = createDiv('', 'task-title-div');
+        const taskTitleDiv = createDiv('', 'task-title-div', 'task-list-row');
         const taskTitleP = createPara(task.title);
 
         const taskButtonsDiv = createDiv('', 'task-buttons-div');
@@ -75,10 +78,73 @@ export default {
         taskDeleteButton.title = "Delete";
         taskButtonsDiv.appendChild(taskDeleteButton);
 
+        const taskDescDiv = createDiv('', 'task-desc-div', 'closed');
+        taskDescDiv.appendChild(createPara(`Description: ${task.desc}`));
+        taskDescDiv.appendChild(createPara(`Created on: ${format(new Date(task.id), 'HH:mm dd MMM yyyy')}`));
+        taskDescDiv.appendChild(createPara(`Due on: ${format(taskService.getDueDate(task), 'HH:mm dd MMM yyyy')}`));
+        taskDescDiv.appendChild(createPara(`Status: ${task.completed? 'Completed':'Pending'}`))
+
+        taskInfoButton.addEventListener('click', () => {
+            taskDescDiv.classList.toggle('active');
+            if (taskDescDiv.style.maxHeight) {
+                taskDescDiv.style.maxHeight = null;
+            } else {
+                taskDescDiv.style.maxHeight = taskDescDiv.scrollHeight + 'px';
+            }
+        });
+
+        taskEditButton.addEventListener('click', () => {
+            const editTaskDiag = document.querySelector('dialog#edit-task');
+            
+            const editTaskForm = editTaskDiag.querySelector('form');
+            editTaskForm.dataset.forTaskID = task.id;
+            editTaskForm.dataset.forProjectID = project.id;
+
+            const title = editTaskForm.querySelector('#edit-title');
+            title.value = task.title;
+
+            const desc = editTaskForm.querySelector('#edit-desc');
+            desc.value = task.desc;
+
+            const priority = editTaskForm.querySelector('#edit-priority');
+            priority.value = task.priority;
+
+            const dueDate = editTaskForm.querySelector('#edit-due-date');
+            const prevDueDate = taskService.getDueDate(task);
+            dueDate.min = prevDueDate.toISOString().slice(0, 16);
+            prevDueDate.setHours(prevDueDate.getHours());
+            prevDueDate.setMinutes(prevDueDate.getMinutes() - prevDueDate.getTimezoneOffset());
+            dueDate.value = prevDueDate.toISOString().slice(0, 16);
+
+            editTaskDiag.showModal();
+
+            editTaskForm.addEventListener('submit', (e) => {
+                if (editTaskForm.checkValidity()) {
+                    const taskID = e.target.dataset.forTaskID;
+                    const projectID = e.target.dataset.forProjectID;
+                    projectController.updateTaskInProject(projectID, taskID, {
+                        title: title.value,
+                        desc: desc.value,
+                        priority: priority.value,
+                        dueDate: (new Date(dueDate.value)).getTime(),
+                    });
+                    editTaskForm.reset();
+                    this.render(projectID);
+                }
+            });
+
+        });
+
+        taskDeleteButton.addEventListener('click', () => {
+            projectController.deleteTaskFromProject(project.id, task);
+            this.render(project.id);
+        });
+
         taskTitleDiv.appendChild(taskTitleP);
         taskTitleDiv.appendChild(taskButtonsDiv);
+        taskTitleDiv.appendChild(taskDescDiv);
 
-        const taskPriorDiv = createDiv('');
+        const taskPriorDiv = createDiv('', "task-list-row");
         const taskPriorP = createPara(taskService.getPriority(task));
 
         switch (taskService.getPriority(task)) {
@@ -95,20 +161,20 @@ export default {
 
         taskPriorDiv.appendChild(taskPriorP);
 
-        const taskDueInDiv = createDiv('');
+        const taskDueInDiv = createDiv('', "task-list-row");
         const taskDueInP = document.createElement('p');
         if ((new Date()).getTime() > task.dueDate) {
             taskDueInP.textContent = format(taskService.getDueDate(task), 'dd MMM yyyy');
             taskDueInP.style.color = "#E63946";
         } else {
-            taskDueInP.textContent = formatDistance(taskService.getDueDate(task), new Date());
+            taskDueInP.textContent = formatDistanceToNow(taskService.getDueDate(task), { addSuffix: true });
         }
 
         taskDueInDiv.appendChild(taskDueInP);
 
         checkBox.addEventListener('click', () => {
             taskService.toggleCompletd(task);
-            this.render(project);
+            this.render(project.id);
         });
 
         if (task.completed) {
@@ -118,39 +184,45 @@ export default {
             taskDueInDiv.classList.add("task-completed");
         }
 
-        checkDiv.classList.add("task-list-row");
-        taskTitleDiv.classList.add("task-list-row", "task-title");
-        taskPriorDiv.classList.add("task-list-row");
-        taskDueInDiv.classList.add("task-list-row");
+        const taskRowContainer = createDiv('', 'task-list-row-container');
 
-        return [checkDiv, taskTitleDiv, taskPriorDiv, taskDueInDiv];
+        taskRowContainer.appendChild(checkDiv);
+        taskRowContainer.appendChild(taskTitleDiv);
+        taskRowContainer.appendChild(taskPriorDiv);
+        taskRowContainer.appendChild(taskDueInDiv);
+
+        return taskRowContainer;
     },
 
-    render(Project) {
+    render(projectID) {
+        const project = projectController.findProject(projectID);
+
         const projectContent = document.querySelector('.project-content');
         projectContent.textContent = '';
 
-        const heading = createHeading(Project.title);
+        const heading = createHeading(project.title);
 
         const tasksList = createDiv('', "tasks-grid-container");
+        const tasksHeadingContainer = createDiv('', 'task-list-heading-container');
 
         const checkCol = createDiv('Status', 'task-list-heading');
         const titleCol = createDiv('Task', 'task-list-heading');
         const priorCol = createDiv('Priority', 'task-list-heading');
-        const dueInCol = createDiv('Due In', 'task-list-heading');
+        const dueInCol = createDiv('Due', 'task-list-heading');
 
-        tasksList.appendChild(checkCol);
-        tasksList.appendChild(titleCol);
-        tasksList.appendChild(priorCol);
-        tasksList.appendChild(dueInCol);
+        tasksHeadingContainer.appendChild(checkCol);
+        tasksHeadingContainer.appendChild(titleCol);
+        tasksHeadingContainer.appendChild(priorCol);
+        tasksHeadingContainer.appendChild(dueInCol);
 
-        Project.tasksArr.forEach(task => {
-            const [checkDiv, taskTitleDiv, taskPriorDiv, taskDueInDiv] = this.createTaskRow(task, Project);
-            tasksList.appendChild(checkDiv);
-            tasksList.appendChild(taskTitleDiv);
-            tasksList.appendChild(taskPriorDiv);
-            tasksList.appendChild(taskDueInDiv);
+        tasksList.appendChild(tasksHeadingContainer);
+
+        project.tasksArr.forEach(task => {
+            const taskRowContainer = this.createTaskRow(task, project);
+            tasksList.appendChild(taskRowContainer);
         });
+
+        const createTaskContainer = createDiv('', 'create-task-row');
 
         const createTaskBtnDiv = createDiv('', 'task-list-row');
 
@@ -163,14 +235,23 @@ export default {
             const title = newTaskForm.querySelector('#task-title');
             const desc = newTaskForm.querySelector('#task-desc');
             const priority = newTaskForm.querySelector('#task-priority');
+
             const dueDate = newTaskForm.querySelector('#task-due-date');
+            const now = new Date();
+            dueDate.min = now.toISOString().slice(0, 16);
+            now.setHours(now.getHours() + 1);
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            dueDate.value = now.toISOString().slice(0, 16);
+
             newTaskDiag.showModal();
 
             newTaskForm.addEventListener('submit', () => {
-                const newTask = taskService.createTask(title.value, desc.value, priority.value, (new Date(dueDate.value)).getTime());
-                projectController.addTaskToProject(Project.id, newTask);
-                newTaskForm.reset();
-                this.render(Project);
+                if (newTaskForm.checkValidity()) {
+                    const newTask = taskService.createTask(title.value, desc.value, priority.value, (new Date(dueDate.value)).getTime());
+                    projectController.addTaskToProject(projectID, newTask);
+                    newTaskForm.reset();
+                    this.render(projectID);
+                }
             });
         });
         createTaskBtnDiv.appendChild(createTaskBtn);
@@ -180,8 +261,10 @@ export default {
         const createTaskP = createPara('Add task');
         createTaskDiv.appendChild(createTaskP);
 
-        tasksList.appendChild(createTaskBtnDiv);
-        tasksList.appendChild(createTaskDiv);
+        createTaskContainer.appendChild(createTaskBtnDiv);
+        createTaskContainer.appendChild(createTaskDiv);
+
+        tasksList.appendChild(createTaskContainer);
 
         projectContent.appendChild(heading);
         projectContent.appendChild(tasksList);

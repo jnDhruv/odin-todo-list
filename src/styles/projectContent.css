@@ -1,7 +1,7 @@
 .tasks-grid-container {
     margin-top: 20px;
     display: grid;
-    grid-template-columns: 100px 4fr 1fr 1fr;
+    grid-template-columns: 1fr;
 
     color: var(--primary-text-color);
 }
@@ -12,20 +12,39 @@
     opacity: 0.8;
 }
 
+.task-list-heading-container,
+.task-list-row-container,
+.create-task-row {
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 100px 4fr 0.5fr 1fr;
+
+    color: var(--primary-text-color);
+}
+
+.task-list-heading-container {
+    overflow: hidden;
+}
+
 .task-list-heading {
-    padding: 5px 0;
+    padding: 10px 0;
     font-weight: bold;
     font-size: 1.1rem;
     background-color: var(--primary-color-lighter);
 }
 
-.task-list-heading:first-child {
+.task-list-heading:first-child,
+.task-list-heading:nth-child(3) {
     text-align: center;
-    border-radius: 10px 0 0 10px;
 }
 
-.task-list-heading:nth-child(4) {
-    border-radius: 0 10px 10px 0;
+.task-list-row-container {
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.6);
+    transition: 0.3s background-color;
+
+    &:has(.active) {
+        background-color: rgb(245, 245, 245);
+    }
 }
 
 .task-list-row {
@@ -37,18 +56,28 @@
 
 .task-list-row:has(input[type='checkbox']) {
     display: grid;
+    align-items: start;
+    justify-items: center;
     padding: 10px 0;
     accent-color: var(--primary-color);
     border-radius: 10px;
-    cursor: pointer;
+
+    & input {
+        margin: 4px;
+        cursor: pointer;
+    }
 }
 
-.task-list-row:nth-last-child(1) {
+.task-list-row:nth-child(3) {
+    text-align: center;
+}
+
+.create-task-row :last-child {
     opacity: 0.8;
     font-weight: bold;
 }
 
-.task-list-row:nth-last-child(2) {
+.create-task-row :first-child {
     display: grid;
 
     & button {
@@ -70,22 +99,21 @@
 }
 
 .task-title-div {
-    padding-right: 4px;
     display: grid;
     grid-template-columns: 1fr 80px;
     align-items: center;
 
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
     & p {
         flex: 1;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 }
 
 .task-buttons-div {
     display: flex;
     justify-content: space-between;
+
     & button {
         opacity: 0.6;
         display: flex;
@@ -97,9 +125,25 @@
 
         cursor: pointer;
         transition: opacity 0.3s, background-color 0.3s;
+
         &:hover {
             opacity: 1;
             background-color: var(--primary-color-lighter);
         }
+    }
+}
+
+.task-desc-div {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s;
+        & p {
+        margin: 0;
+        font-weight: normal;
+        font-size: 0.9rem;
+        margin-bottom: 2px;
+    }
+    & p:last-child {
+        margin-bottom: 10px;
     }
 }

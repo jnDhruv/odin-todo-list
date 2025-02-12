@@ -17,14 +17,14 @@
         <div class="logo">
             <button class="menu-button header-button">&#9776;</button>
             <div class="image">
-                <img src="icons/todo-logo.jpg" alt="logo">
+                <img src="icons/todo-logo.jpg" alt="logo" width="50" height="50">
             </div>
             <h1>todo</h1>
         </div>
         <div class="github-button">
-            <button class="header-button"><a href="https://github.com/jnDhruv/odin-todo-list" target="_blank">
-                    <img src="icons/github.svg" alt="Repo">
-                </a></button>
+            <button class="header-button" id="repo-redirect">
+                <img src="icons/github.svg" alt="Repo" width="50" height="50">
+            </button>
         </div>
     </header>
     <main>
@@ -55,6 +55,36 @@
             <div>
                 <label for="task-priority">Priority:</label>
                 <select name="priority" id="task-priority">
+                    <option value="1">High</option>
+                    <option value="2">Medium</option>
+                    <option value="3">Low</option>
+                </select>
+            </div>
+            <div>
+                <button type="submit"><img src="icons/tick.svg" alt="Done"></button>
+                <button class="close-dialog-button"><img src="./icons/close.svg" alt="Close"></button>
+            </div>
+        </form>
+    </dialog>
+    <dialog id="edit-task">
+        <h1>Edit Task</h1>
+        <form action="#" method="dialog">
+            <div>
+                <label for="edit-title">Task Title:</label>
+                <input type="text" id="edit-title" name="edit-title" required placeholder="Title">
+            </div>
+
+            <div>
+                <label for="edit-desc">Task Description:</label>
+                <textarea name="edit-desc" id="edit-desc" placeholder="Description"></textarea>
+            </div>
+            <div>
+                <label for="edit-due-date">Due By:</label>
+                <input type="datetime-local" id="edit-due-date" name="edit-due-date" required>
+            </div>
+            <div>
+                <label for="edit-priority">Priority:</label>
+                <select name="priority" id="edit-priority">
                     <option value="1">High</option>
                     <option value="2">Medium</option>
                     <option value="3">Low</option>
