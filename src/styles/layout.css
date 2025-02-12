@@ -17,9 +17,14 @@ h1 {
     margin: 0;
 }
 
+@font-face {
+    font-family: Nunito;
+    src: url('../fonts/Nunito.ttf');
+}
+
 body {
     display: grid;
-    font-family: Nunito;
+    font-family: Nunito, Arial;
     background-color:var(--background-color);
 }
 
