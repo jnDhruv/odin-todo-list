@@ -252,6 +252,7 @@ export default {
         const sortImage1 = createImg(sortIcon, 'Sort', '20', '20');
         const sortByPriority = createButton('', 'sort-button');
         sortByPriority.appendChild(sortImage1);
+        sortByPriority.title = 'Sort by Priority';
         sortByPriority.addEventListener('click', () => {
             projectController.sortTasksByPriority(projectID);
             this.render(projectID);
@@ -260,6 +261,7 @@ export default {
         const sortImage2 = createImg(sortIcon, 'Sort', '20', '20');
         const sortByDueDate = createButton('', 'sort-button');
         sortByDueDate.appendChild(sortImage2);
+        sortByDueDate.title = 'Sort by Due date';
         sortByDueDate.addEventListener('click', () => {
             projectController.sortTasksByDueDate(projectID);
             this.render(projectID);
@@ -287,6 +289,7 @@ export default {
 
         const createTaskBtn = document.createElement('button');
         createTaskBtn.textContent = '+';
+        createTaskBtn.title = 'Create a new task';
         createTaskBtn.addEventListener('click', () => {
             const newTaskDiag = document.querySelector('#create-new-task');
             const newTaskForm = newTaskDiag.querySelector("form");
