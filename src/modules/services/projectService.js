@@ -21,6 +21,10 @@ export default {
         return project.tasksArr;
     },
 
+    sortTasksByStatus(project) {
+        project.tasksArr.sort((task1,task2) => task1.completed ? 1 : -1);
+    },
+
     sortTasksByID(project) {
         project.tasksArr.sort((task1, task2) => task1.id - task2.id);
     },

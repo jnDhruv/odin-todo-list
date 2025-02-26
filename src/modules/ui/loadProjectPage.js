@@ -9,6 +9,7 @@ import "../../styles/dialogs.css"
 import infoIcon from "../../icons/info.svg";
 import editIcon from "../../icons/edit.svg";
 import deleteIcon from "../../icons/deleteTask.svg";
+import sortIcon from "../../icons/sort.svg";
 
 function createHeading(text) {
     const heading = document.createElement('h1');
@@ -45,6 +46,15 @@ function createImg(srcObj, alt, width, height) {
         imgElement.height = height;
     }
     return imgElement;
+}
+
+function createButton(content, ...classes) {
+    const newButton = document.createElement('button');
+    newButton.innerHTML = content;
+    if (classes.length !== 0) {
+        classes.forEach(classIn => newButton.classList.add(classIn));
+    }
+    return newButton;
 }
 
 export default {
@@ -238,6 +248,26 @@ export default {
         const titleCol = createDiv('Task', 'task-list-heading');
         const priorCol = createDiv('Priority', 'task-list-heading');
         const dueInCol = createDiv('Due', 'task-list-heading');
+
+        const sortImage1 = createImg(sortIcon, 'Sort', '20', '20');
+        const sortByPriority = createButton('', 'sort-button');
+        sortByPriority.appendChild(sortImage1);
+        sortByPriority.addEventListener('click', () => {
+            projectController.sortTasksByPriority(projectID);
+            this.render(projectID);
+        });
+
+        const sortImage2 = createImg(sortIcon, 'Sort', '20', '20');
+        const sortByDueDate = createButton('', 'sort-button');
+        sortByDueDate.appendChild(sortImage2);
+        sortByDueDate.addEventListener('click', () => {
+            projectController.sortTasksByDueDate(projectID);
+            this.render(projectID);
+        });
+
+        priorCol.appendChild(sortByPriority);
+        dueInCol.appendChild(sortByDueDate);
+
 
         tasksHeadingContainer.appendChild(checkCol);
         tasksHeadingContainer.appendChild(titleCol);

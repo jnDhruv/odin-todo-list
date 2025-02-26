@@ -64,4 +64,19 @@ export default {
         projectService.removeTaskFromProject(project, task.id);
         this.save();
     },
+
+    sortTasksByStatus(projectID) {
+        const project = this.findProject(projectID);
+        projectService.sortTasksByStatus(project);
+    },
+
+    sortTasksByPriority(projectID) {
+        const project = this.findProject(projectID);
+        projectService.sortTasksByPriority(project);
+    },
+
+    sortTasksByDueDate(projectID) {
+        const project = this.findProject(projectID);
+        projectService.sortTasksByDueDate(project);
+    }
 }
