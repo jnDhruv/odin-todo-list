@@ -2,89 +2,89 @@
 #edit-task,
 #create-new-project,
 #edit-project {
-    border: none;
-    border-radius: 10px;
+  border: none;
+  border-radius: 10px;
 
-    & form {
-        margin-top: 10px;
-        display: flex;
-        flex-direction: column;
+  & form {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
 
-        & input,
-        textarea {
-            display: block;
-            border-radius: 2px;
-            border: 1px solid;
-            font-size: 100%;
-            font-family: inherit;
-            padding: 5px;
-            width: 234.8px;
-        }
-
-        & textarea {
-            resize: vertical;
-            max-height: 200px;
-        }
-
-        & select {
-            display: block;
-            font-size: 100%;
-            font-family: inherit;
-        }
-
-        & div+div {
-            margin-top: 10px;
-        }
-
-        & div:has(button) {
-            display: flex;
-            justify-content: space-evenly;
-            margin-top: 16px;
-
-            & button {
-                display: flex;
-                padding: 3px;
-                background-color: var(--primary-color);
-                border: none;
-                border-radius: 10px;
-                cursor: pointer;
-                align-items: center;
-                transition: 0.3s;
-
-                &:hover {
-                    background-color: var(--primary-color-lighter);
-                }
-            }
-
-            & img {
-                width: 25px;
-            }
-        }
+    & input,
+    textarea {
+      display: block;
+      border-radius: 2px;
+      border: 1px solid;
+      font-size: 100%;
+      font-family: inherit;
+      padding: 5px;
+      width: 234.8px;
     }
+
+    & textarea {
+      resize: vertical;
+      max-height: 200px;
+    }
+
+    & select {
+      display: block;
+      font-size: 100%;
+      font-family: inherit;
+    }
+
+    & div + div {
+      margin-top: 10px;
+    }
+
+    & div:has(button) {
+      display: flex;
+      justify-content: space-evenly;
+      margin-top: 16px;
+
+      & button {
+        display: flex;
+        padding: 3px;
+        background-color: var(--primary-color);
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        align-items: center;
+        transition: 0.3s;
+
+        &:hover {
+          background-color: var(--primary-color-lighter);
+        }
+      }
+
+      & img {
+        width: 25px;
+      }
+    }
+  }
 }
 
 dialog::backdrop {
-    opacity: 0;
-    backdrop-filter: blur(5px);
+  opacity: 0;
+  backdrop-filter: blur(5px);
 }
 
 dialog {
-    opacity: 0;
+  opacity: 0;
 }
 
 dialog[open] {
-    animation: fadein 0.2s ease-in forwards;
+  animation: fadein 0.2s ease-in forwards;
 
-    &::backdrop {
-        animation: fadein 0.2s ease-in forwards;
-    }
+  &::backdrop {
+    animation: fadein 0.2s ease-in forwards;
+  }
 }
 
 @keyframes fadein {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

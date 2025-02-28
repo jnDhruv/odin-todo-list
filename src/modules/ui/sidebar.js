@@ -5,84 +5,86 @@ import "../../styles/sidebar.css";
 import deleteIcon from "../../icons/delete.svg";
 
 function removeSelectedProject() {
-    const selected = document.querySelectorAll('li button.selected');
-    selected.forEach(project => project.classList.remove('selected'));
+  const selected = document.querySelectorAll("li button.selected");
+  selected.forEach((project) => project.classList.remove("selected"));
 }
 
 export default {
-    createProjectLi(project) {
-        const projectLi = document.createElement('li');
+  createProjectLi(project) {
+    const projectLi = document.createElement("li");
 
-        const projectButton = document.createElement('button');
-        projectButton.textContent = project.title;
-        projectButton.dataset.projectID = project.id;
-        projectButton.addEventListener('click', (e) => {
-            removeSelectedProject();
-            e.target.classList.add('selected');
-            e.target.parentElement.parentElement.dataset.selectedProject = e.target.dataset.projectID;
-            loadProjectPage.render(e.target.dataset.projectID);            
-        });
+    const projectButton = document.createElement("button");
+    projectButton.textContent = project.title;
+    projectButton.dataset.projectID = project.id;
+    projectButton.addEventListener("click", (e) => {
+      removeSelectedProject();
+      e.target.classList.add("selected");
+      e.target.parentElement.parentElement.dataset.selectedProject =
+        e.target.dataset.projectID;
+      loadProjectPage.render(e.target.dataset.projectID);
+    });
 
-        const deleteButton = document.createElement('button');
-        deleteButton.classList.add("project-delete");
-        const deleteImg = document.createElement('img');
-        deleteImg.src = deleteIcon;
-        deleteImg.alt = "Delete";
-        deleteButton.addEventListener('click', () => {
-            projectController.deleteProject(project.id);
-            this.render();
-            loadProjectPage.init();
-        });
-        deleteButton.appendChild(deleteImg);
+    const deleteButton = document.createElement("button");
+    deleteButton.classList.add("project-delete");
+    const deleteImg = document.createElement("img");
+    deleteImg.src = deleteIcon;
+    deleteImg.alt = "Delete";
+    deleteButton.addEventListener("click", () => {
+      projectController.deleteProject(project.id);
+      this.render();
+      loadProjectPage.init();
+    });
+    deleteButton.appendChild(deleteImg);
 
-        projectLi.classList.add('project-button');
-        projectLi.appendChild(projectButton);
-        projectLi.appendChild(deleteButton);
-    
-        return projectLi;
-    },
+    projectLi.classList.add("project-button");
+    projectLi.appendChild(projectButton);
+    projectLi.appendChild(deleteButton);
 
-    render() {
-        const navList = document.querySelector("nav ul");
-        navList.innerHTML = '';
+    return projectLi;
+  },
 
-        const heading = document.createElement('h2');
-        heading.textContent = "PROJECTS:";
-        heading.classList.add("menu-heading");
-        navList.appendChild(heading);
+  render() {
+    const navList = document.querySelector("nav ul");
+    navList.innerHTML = "";
 
-        const projects = projectController.projects;
+    const heading = document.createElement("h2");
+    heading.textContent = "PROJECTS:";
+    heading.classList.add("menu-heading");
+    navList.appendChild(heading);
 
-        projects.forEach((project) => {
-            const projectLi = this.createProjectLi(project);
-            if (navList.dataset.selectedProject == project.id) projectLi.querySelector('button').classList.add('selected');
-            navList.appendChild(projectLi);
-        });
+    const projects = projectController.projects;
 
-        const addNewProjectLi = document.createElement('li');
+    projects.forEach((project) => {
+      const projectLi = this.createProjectLi(project);
+      if (navList.dataset.selectedProject == project.id)
+        projectLi.querySelector("button").classList.add("selected");
+      navList.appendChild(projectLi);
+    });
 
-        addNewProjectLi.classList.add('project-button', 'new-project-button');
-        
-        const addNewProjectBtn = document.createElement('button');
-        addNewProjectBtn.textContent = `+ Create project`;
-        addNewProjectBtn.addEventListener('click', () => {
-            const newProjDiag = document.querySelector('#create-new-project');
-            const newProjForm = newProjDiag.querySelector('form');
+    const addNewProjectLi = document.createElement("li");
 
-            const newProjTitle = newProjForm.querySelector('#project-title');
+    addNewProjectLi.classList.add("project-button", "new-project-button");
 
-            newProjDiag.showModal();
+    const addNewProjectBtn = document.createElement("button");
+    addNewProjectBtn.textContent = `+ Create project`;
+    addNewProjectBtn.addEventListener("click", () => {
+      const newProjDiag = document.querySelector("#create-new-project");
+      const newProjForm = newProjDiag.querySelector("form");
 
-            newProjForm.addEventListener('submit', () => {
-                if (newProjForm.checkValidity()) {
-                    projectController.addProject(newProjTitle.value);
-                    newProjForm.reset();
-                    this.render();
-                }
-            });
-        });
+      const newProjTitle = newProjForm.querySelector("#project-title");
 
-        addNewProjectLi.appendChild(addNewProjectBtn);
-        navList.appendChild(addNewProjectLi);
-    }
-}
+      newProjDiag.showModal();
+
+      newProjForm.addEventListener("submit", () => {
+        if (newProjForm.checkValidity()) {
+          projectController.addProject(newProjTitle.value);
+          newProjForm.reset();
+          this.render();
+        }
+      });
+    });
+
+    addNewProjectLi.appendChild(addNewProjectBtn);
+    navList.appendChild(addNewProjectLi);
+  },
+};

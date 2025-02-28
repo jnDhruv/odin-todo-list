@@ -1,122 +1,122 @@
 :root {
-    --primary-color: #008080;
-    --primary-color-darker: #006666;
-    --primary-color-lighter: #99CCCC;
-    --background-color: #F4F7F8;
-    --primary-text-color: #2D2D2D;
-    --border-color: black;
+  --primary-color: #008080;
+  --primary-color-darker: #006666;
+  --primary-color-lighter: #99cccc;
+  --background-color: #f4f7f8;
+  --primary-text-color: #2d2d2d;
+  --border-color: black;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body,
 h1 {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 @font-face {
-    font-family: Nunito;
-    src: url('../fonts/Nunito.ttf');
+  font-family: Nunito;
+  src: url("../fonts/Nunito.ttf");
 }
 
 body {
-    display: grid;
-    font-family: Nunito, Arial;
-    background-color:var(--background-color);
+  display: grid;
+  font-family: Nunito, Arial;
+  background-color: var(--background-color);
 }
 
 header {
-    user-select: none !important;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  user-select: none !important;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-    padding: 10px;
-    background-color: var(--primary-color);
+  padding: 10px;
+  background-color: var(--primary-color);
 
-    border-bottom: 2px solid var(--border-color);
+  border-bottom: 2px solid var(--border-color);
 }
 
 .header-button {
-    background-color: transparent;
-    padding: 2px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: 0.3s;
+  background-color: transparent;
+  padding: 2px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
 
-    &:hover {
-        background-color: rgba(255, 255, 255, 0.2);
-    }
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
 
-    &:active {
-        background-color: rgba(255, 255, 255, 0.4);
-    }
+  &:active {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
 }
 
 .menu-button {
-    width: 50px;
-    height: 50px;
-    color: var(--background-color);
-    background-color: transparent;
-    border: none;
-    font-size: 2rem;
-    margin-right: 10px;
+  width: 50px;
+  height: 50px;
+  color: var(--background-color);
+  background-color: transparent;
+  border: none;
+  font-size: 2rem;
+  margin-right: 10px;
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    & .image {
-        height: 50px;
-        margin-right: 10px;
-    }
+  & .image {
+    height: 50px;
+    margin-right: 10px;
+  }
 
-    & img {
-        border-radius: 50%;
-    }
+  & img {
+    border-radius: 50%;
+  }
 
-    & h1 {
-        font-size: 3rem;
-    }
+  & h1 {
+    font-size: 3rem;
+  }
 }
 
 .github-button button {
-    & img {
-        vertical-align: middle;
-        width: 50px;
-    }
+  & img {
+    vertical-align: middle;
+    width: 50px;
+  }
 }
 
 main {
-    display: grid;
-    grid-template-columns: 250px 1fr;
-    grid-template-rows: 1fr;
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  grid-template-rows: 1fr;
 }
 
 .sidebar-container {
-    position: relative;
-    border-right: 2px solid var(--border-color);
-    background-color: var(--primary-color-darker);
-    height: calc(100vh - 87.2px);
-    width: 250px;
-    color: white;
-    
-    & ul {
-        margin: 0;
-        padding: 0;
-        & li {
-            list-style: none;
-        }
-    } 
+  position: relative;
+  border-right: 2px solid var(--border-color);
+  background-color: var(--primary-color-darker);
+  height: calc(100vh - 87.2px);
+  width: 250px;
+  color: white;
+
+  & ul {
+    margin: 0;
+    padding: 0;
+    & li {
+      list-style: none;
+    }
+  }
 }
 
 .project-content {
-    padding: 12px;
+  padding: 12px;
 }

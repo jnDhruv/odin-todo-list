@@ -1,120 +1,165 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todo List</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <header>
-        <div class="logo">
-            <button class="menu-button header-button">&#9776;</button>
-            <div class="image">
-                <img src="icons/todo-logo.jpg" alt="logo" width="50" height="50">
-            </div>
-            <h1>todo</h1>
+      <div class="logo">
+        <button class="menu-button header-button">&#9776;</button>
+        <div class="image">
+          <img src="icons/todo-logo.jpg" alt="logo" width="50" height="50" />
         </div>
-        <div class="github-button">
-            <button class="header-button" id="repo-redirect">
-                <img src="icons/github.svg" alt="Repo" width="50" height="50">
-            </button>
-        </div>
+        <h1>todo</h1>
+      </div>
+      <div class="github-button">
+        <button class="header-button" id="repo-redirect">
+          <img src="icons/github.svg" alt="Repo" width="50" height="50" />
+        </button>
+      </div>
     </header>
     <main>
-        <div class="sidebar-container">
-            <nav>
-                <ul>
-                </ul>
-            </nav>
-        </div>
-        <div class="project-content"></div>
+      <div class="sidebar-container">
+        <nav>
+          <ul></ul>
+        </nav>
+      </div>
+      <div class="project-content"></div>
     </main>
     <dialog id="create-new-task">
-        <h1>New Task</h1>
-        <form action="#" method="dialog">
-            <div>
-                <label for="task-title">Task Title:</label>
-                <input type="text" id="task-title" name="task-title" required placeholder="Title">
-            </div>
+      <h1>New Task</h1>
+      <form action="#" method="dialog">
+        <div>
+          <label for="task-title">Task Title:</label>
+          <input
+            type="text"
+            id="task-title"
+            name="task-title"
+            required
+            placeholder="Title"
+          />
+        </div>
 
-            <div>
-                <label for="task-desc">Task Description:</label>
-                <textarea name="task-desc" id="task-desc" placeholder="Description"></textarea>
-            </div>
-            <div>
-                <label for="task-due-date">Due By:</label>
-                <input type="datetime-local" id="task-due-date" name="task-due-date" required>
-            </div>
-            <div>
-                <label for="task-priority">Priority:</label>
-                <select name="priority" id="task-priority">
-                    <option value="1">High</option>
-                    <option value="2">Medium</option>
-                    <option value="3">Low</option>
-                </select>
-            </div>
-            <div>
-                <button type="submit"><img src="icons/tick.svg" alt="Done"></button>
-                <button class="close-dialog-button"><img src="./icons/close.svg" alt="Close"></button>
-            </div>
-        </form>
+        <div>
+          <label for="task-desc">Task Description:</label>
+          <textarea
+            name="task-desc"
+            id="task-desc"
+            placeholder="Description"
+          ></textarea>
+        </div>
+        <div>
+          <label for="task-due-date">Due By:</label>
+          <input
+            type="datetime-local"
+            id="task-due-date"
+            name="task-due-date"
+            required
+          />
+        </div>
+        <div>
+          <label for="task-priority">Priority:</label>
+          <select name="priority" id="task-priority">
+            <option value="1">High</option>
+            <option value="2">Medium</option>
+            <option value="3">Low</option>
+          </select>
+        </div>
+        <div>
+          <button type="submit"><img src="icons/tick.svg" alt="Done" /></button>
+          <button class="close-dialog-button">
+            <img src="./icons/close.svg" alt="Close" />
+          </button>
+        </div>
+      </form>
     </dialog>
     <dialog id="edit-task">
-        <h1>Edit Task</h1>
-        <form action="#" method="dialog">
-            <div>
-                <label for="edit-title">Task Title:</label>
-                <input type="text" id="edit-title" name="edit-title" required placeholder="Title">
-            </div>
+      <h1>Edit Task</h1>
+      <form action="#" method="dialog">
+        <div>
+          <label for="edit-title">Task Title:</label>
+          <input
+            type="text"
+            id="edit-title"
+            name="edit-title"
+            required
+            placeholder="Title"
+          />
+        </div>
 
-            <div>
-                <label for="edit-desc">Task Description:</label>
-                <textarea name="edit-desc" id="edit-desc" placeholder="Description"></textarea>
-            </div>
-            <div>
-                <label for="edit-due-date">Due By:</label>
-                <input type="datetime-local" id="edit-due-date" name="edit-due-date" required>
-            </div>
-            <div>
-                <label for="edit-priority">Priority:</label>
-                <select name="priority" id="edit-priority">
-                    <option value="1">High</option>
-                    <option value="2">Medium</option>
-                    <option value="3">Low</option>
-                </select>
-            </div>
-            <div>
-                <button type="submit"><img src="icons/tick.svg" alt="Done"></button>
-                <button class="close-dialog-button"><img src="./icons/close.svg" alt="Close"></button>
-            </div>
-        </form>
+        <div>
+          <label for="edit-desc">Task Description:</label>
+          <textarea
+            name="edit-desc"
+            id="edit-desc"
+            placeholder="Description"
+          ></textarea>
+        </div>
+        <div>
+          <label for="edit-due-date">Due By:</label>
+          <input
+            type="datetime-local"
+            id="edit-due-date"
+            name="edit-due-date"
+            required
+          />
+        </div>
+        <div>
+          <label for="edit-priority">Priority:</label>
+          <select name="priority" id="edit-priority">
+            <option value="1">High</option>
+            <option value="2">Medium</option>
+            <option value="3">Low</option>
+          </select>
+        </div>
+        <div>
+          <button type="submit"><img src="icons/tick.svg" alt="Done" /></button>
+          <button class="close-dialog-button">
+            <img src="./icons/close.svg" alt="Close" />
+          </button>
+        </div>
+      </form>
     </dialog>
     <dialog id="create-new-project">
-        <h1>New Project</h1>
-        <form action="#" method="dialog">
-            <div>
-                <input type="text" id="project-title" required placeholder="Project Title">
-            </div>
-            <div>
-                <button type="submit"><img src="icons/tick.svg" alt="Done"></button>
-                <button class="close-dialog-button"><img src="./icons/close.svg" alt="Close"></button>
-            </div>
-        </form>
+      <h1>New Project</h1>
+      <form action="#" method="dialog">
+        <div>
+          <input
+            type="text"
+            id="project-title"
+            required
+            placeholder="Project Title"
+          />
+        </div>
+        <div>
+          <button type="submit"><img src="icons/tick.svg" alt="Done" /></button>
+          <button class="close-dialog-button">
+            <img src="./icons/close.svg" alt="Close" />
+          </button>
+        </div>
+      </form>
     </dialog>
     <dialog id="edit-project">
-        <h1>Edit Project</h1>
-        <form action="#" method="dialog">
-            <div>
-                <input type="text" id="edit-project-title" required placeholder="Project Title">
-            </div>
-            <div>
-                <button type="submit"><img src="icons/tick.svg" alt="Done"></button>
-                <button class="close-dialog-button"><img src="./icons/close.svg" alt="Close"></button>
-            </div>
-        </form>
+      <h1>Edit Project</h1>
+      <form action="#" method="dialog">
+        <div>
+          <input
+            type="text"
+            id="edit-project-title"
+            required
+            placeholder="Project Title"
+          />
+        </div>
+        <div>
+          <button type="submit"><img src="icons/tick.svg" alt="Done" /></button>
+          <button class="close-dialog-button">
+            <img src="./icons/close.svg" alt="Close" />
+          </button>
+        </div>
+      </form>
     </dialog>
-</body>
-
+  </body>
 </html>
